@@ -10,31 +10,35 @@ def DFS(lab:Labyrinth):
 
 def BFS(lab:Labyrinth):
     print('Starting BFS')
-    trail = []
+    end = lab.getEndCell()
+    # we create a dicctionary to keep track of the visited cells
     visited = {}
-    final = False
-    
-    sc = lab.getStartCell()
-    ec = lab.getEndCell()
-    c = sc
-    toVisit = []
+    # creem una llista per anar guardant els possibles paths
+    possible_paths = [[lab.getStartCell()]]
 
-    # 1. getChildren
-    # 2. comprovar que cap és EndCell
-    # 3. toVisit.append
+    # bucle mentres encara quedin paths per comprovar
+    while possible_paths:
+        # agafem una possible ruta
+        path = possible_paths.pop(0)
+        # agafem l'última cell del possible path, per continuar mirant els seus childrens
+        current_cell = path[-1]
+        # si la current_cell encara no ha estat visitatda
+        if current_cell not in visited:
+            # tractem un per un tots els children de current_cell
+            for child in current_cell.getChildren():
+                # creem un nou possible path format per: el path del pare + aquest child
+                new_possible_path = list(path)
+                new_possible_path.append(child)
+                # si el child és el final, retornem el nou (possible) path, que ha resultat ser la solució
+                if child == end:
+                    return new_possible_path
+                # si no, l'afegim a la llista de possibles paths
+                possible_paths.append(new_possible_path)
     
-    while not final:
-        for y in c.getChildren(): # per totes les caselles conectades a c
-            if y not in visited and y != ec: # si la visitem per primer cop i no és la EndCell
-                toVisit.append(y) # la afegim per visitar
-                visited[y]="0" # 
-            elif y == ec:
-                final = True
-                print(y)
-            
-        c = toVisit.pop()
-
-    return trail
+            # afegin la current_cell a la llista de visitades
+            visited[current_cell]=0
+    # si arriba aquí significa que no ha trobat cap path, per tant retornem una llista buida
+    return []
 
 if __name__ == '__main__':
     algo_choices = ['BFS', 'DFS']
