@@ -1,12 +1,25 @@
 from labyrinth import Labyrinth
+# Que es haver visitat una cell?
 
+def rec_DFS(cell, visited, endcell):
+    #print(cell)
+    if cell == endcell:
+        return [cell]
+    else:
+        for c in cell.getChildren():
+            if c not in visited:
+                visited[cell]=0
+                return list([cell] + rec_DFS(c, visited, endcell))
+    return []
+                
 def DFS(lab:Labyrinth):
     print('Starting DFS')
-    trail = []
 
-    #TODO
+    start = lab.getStartCell()
+    end = lab.getEndCell()
+    visited = {start: 0}
 
-    return trail
+    return rec_DFS(start, visited, end)
 
 def BFS(lab:Labyrinth):
     print('Starting BFS')
