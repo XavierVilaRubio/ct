@@ -1,6 +1,10 @@
 from labyrinth import Labyrinth
 
 def rec_DFS(current_cell, visited, endcell):
+    '''
+    Pre-condition: current_cell siendo la celda cuyos hijos queremos visitar, visited la lista de celdas visitadas y endcell la salida del laberinto
+    Post-condition: current_cell si current_cell == endcell, [] si no hay camino posible, o una lista de las celdas devueltas, que resultaran ser el camino una vez se retorne a DFS()
+    '''
     # comprovem que la cell actual no sigui la final, si ho és directament la tornem
     if current_cell == endcell:
         return [current_cell]
@@ -11,16 +15,13 @@ def rec_DFS(current_cell, visited, endcell):
             if child not in visited:
                 # el marquem com a visitat
                 visited[child]=0
-                # preparem el valor de retorn format per la current_cell + la funció recursiva del fill
-                ret = list([current_cell] + rec_DFS(child, visited, endcell))
-                # si l'ultima posició no és la endcell significa que no ha aconseguit arribar al final
-                if ret[-1] != endcell:
-                    # per tant anem a la següent iteració del for
-                    continue
-                # si l'última posició sí que és la endcell significa que ha arribat a la sortida del laberint
-                else:
-                    # retornem la current_cell + la funció recursiva del fill
-                    return ret
+                # guardem el retorn de la funció recursiva del fill
+                ret = rec_DFS(child, visited, endcell)
+                # comprovem si la longitud del valor de la crida a la funció recursiva és més gran que 0
+                if len(ret) > 0:
+                    # si ho és significa que no ha retornat la llista buida, i que per tant ha trobat el final
+                    return list([current_cell] + ret)
+                # si no ho és, significa que és 0, per tant ens ha retornat la llista buida i no ha trobat el final, aixi que fem la següent iteració del for
     # si arriba aquí significa que no ha trobat cap path possible
     return []
                 
@@ -34,6 +35,10 @@ def DFS(lab:Labyrinth):
     return rec_DFS(start, visited, end)
 
 def BFS(lab:Labyrinth):
+    '''
+    Pre-condition: Que Labyrinth sea un laberinto de tipo lab.
+    Post-condition: BFS(lab:Labyrinth) = al path més curt de S a E
+    '''
     print('Starting BFS')
     end = lab.getEndCell()
     # we create a dicctionary to keep track of the visited cells
