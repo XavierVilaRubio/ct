@@ -8,8 +8,12 @@ def rec_DFS(cell, visited, endcell):
     else:
         for c in cell.getChildren():
             if c not in visited:
-                visited[cell]=0
-                return list([cell] + rec_DFS(c, visited, endcell))
+                visited[c]=0
+                ret = list([cell] + rec_DFS(c, visited, endcell))
+                if ret[-1] != endcell:
+                    continue
+                else:
+                    return ret
     return []
                 
 def DFS(lab:Labyrinth):
