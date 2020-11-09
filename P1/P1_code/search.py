@@ -1,19 +1,27 @@
 from labyrinth import Labyrinth
-# Que es haver visitat una cell?
 
-def rec_DFS(cell, visited, endcell):
-    #print(cell)
-    if cell == endcell:
-        return [cell]
+def rec_DFS(current_cell, visited, endcell):
+    # comprovem que la cell actual no sigui la final, si ho és directament la tornem
+    if current_cell == endcell:
+        return [current_cell]
     else:
-        for c in cell.getChildren():
-            if c not in visited:
-                visited[c]=0
-                ret = list([cell] + rec_DFS(c, visited, endcell))
+        # bucle per tractar els fills de current_cell
+        for child in current_cell.getChildren():
+            # si encara no hem visitat el child
+            if child not in visited:
+                # el marquem com a visitat
+                visited[child]=0
+                # preparem el valor de retorn format per la current_cell + la funció recursiva del fill
+                ret = list([current_cell] + rec_DFS(child, visited, endcell))
+                # si l'ultima posició no és la endcell significa que no ha aconseguit arribar al final
                 if ret[-1] != endcell:
+                    # per tant anem a la següent iteració del for
                     continue
+                # si l'última posició sí que és la endcell significa que ha arribat a la sortida del laberint
                 else:
+                    # retornem la current_cell + la funció recursiva del fill
                     return ret
+    # si arriba aquí significa que no ha trobat cap path possible
     return []
                 
 def DFS(lab:Labyrinth):
