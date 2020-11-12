@@ -5,24 +5,24 @@ def rec_DFS(current_cell, visited, endcell):
     Pre-condition: current_cell siendo la celda cuyos hijos queremos visitar, visited la lista de celdas visitadas y endcell la salida del laberinto
     Post-condition: current_cell si current_cell == endcell, [] si no hay camino posible, o una lista de las celdas devueltas, que resultaran ser el camino una vez se retorne a DFS()
     '''
-    # comprovem que la cell actual no sigui la final, si ho és directament la tornem
+    # we make sure that the actual cell isn't the final one. If it is, we return it directly.
     if current_cell == endcell:
         return [current_cell]
     else:
-        # bucle per tractar els fills de current_cell
+        # loop that treats current_cell's childs
         for child in current_cell.getChildren():
-            # si encara no hem visitat el child
+            # if the child was not visited before child
             if child not in visited:
-                # el marquem com a visitat
+                # we mark him as visited
                 visited[child]=0
-                # guardem el retorn de la funció recursiva del fill
+                # we save the return value from the child's recursive function
                 ret = rec_DFS(child, visited, endcell)
-                # comprovem si la longitud del valor de la crida a la funció recursiva és més gran que 0
+                # we make sure that the lenght of the value from the recursive function is > 0
                 if len(ret) > 0:
-                    # si ho és significa que no ha retornat la llista buida, i que per tant ha trobat el final
+                    # if it is, it means that the function didn't return the empty list, wich means that it didn't find the exit
                     return list([current_cell] + ret)
-                # si no ho és, significa que és 0, per tant ens ha retornat la llista buida i no ha trobat el final, aixi que fem la següent iteració del for
-    # si arriba aquí significa que no ha trobat cap path possible
+                # if it's not, it means that the function returned the empty list and it didn't find any path, so we proceed to do the next iteration
+    # if it reaches this point means that there is'nt any possible path to reach the end
     return []
                 
 def DFS(lab:Labyrinth):
@@ -43,31 +43,31 @@ def BFS(lab:Labyrinth):
     end = lab.getEndCell()
     # we create a dicctionary to keep track of the visited cells
     visited = {}
-    # creem una llista per anar guardant els possibles paths
+    # we create a list saving the possible paths
     possible_paths = [[lab.getStartCell()]]
 
-    # bucle mentres encara quedin paths per comprovar
+    # loop while there are paths to check
     while possible_paths:
-        # agafem una possible ruta
+        # we try a possible path
         path = possible_paths.pop(0)
-        # agafem l'última cell del possible path, per continuar mirant els seus childrens
+        # in the last cell from the possible path to search for children
         current_cell = path[-1]
-        # si la current_cell encara no ha estat visitatda
+        # if the current cell hasn't been visited
         if current_cell not in visited:
-            # tractem un per un tots els children de current_cell
+            # we check pne by one current cell's children
             for child in current_cell.getChildren():
-                # creem un nou possible path format per: el path del pare + aquest child
+                # we create a new possible path formed by: father's path + this child
                 new_possible_path = list(path)
                 new_possible_path.append(child)
-                # si el child és el final, retornem el nou (possible) path, que ha resultat ser la solució
+                # if the child is the exit, we return the new (possible) path, that it has turned out to be the solution
                 if child == end:
                     return new_possible_path
-                # si no, l'afegim a la llista de possibles paths
+                # if not, we add it to the possible paths list
                 possible_paths.append(new_possible_path)
     
-            # afegin la current_cell a la llista de visitades
+            # we add the current cell to the visited cells list
             visited[current_cell]=0
-    # si arriba aquí significa que no ha trobat cap path, per tant retornem una llista buida
+    # if we reach this point, it means that there is no possible path, so we return an empty list
     return []
 
 if __name__ == '__main__':
