@@ -2,8 +2,8 @@ from labyrinth import Labyrinth
 
 def rec_DFS(current_cell, visited, endcell):
     '''
-    Pre-condition: current_cell siendo la celda cuyos hijos queremos visitar, visited la lista de celdas visitadas y endcell la salida del laberinto
-    Post-condition: current_cell si current_cell == endcell, [] si no hay camino posible, o una lista de las celdas devueltas, que resultaran ser el camino una vez se retorne a DFS()
+    Pre-condition: current_cell being the cell whose children we want to visit, visited the cell list and endcell the labyrinth exit
+    Post-condition: current_cell if current_cell == endcell, [] if there is no posible path, or a list of the returned cells, which has turned out to be the path once we return it to DFS() returns
     '''
     # we make sure that the actual cell isn't the final one. If it is, we return it directly.
     if current_cell == endcell:
@@ -36,8 +36,8 @@ def DFS(lab:Labyrinth):
 
 def BFS(lab:Labyrinth):
     '''
-    Pre-condition: Que Labyrinth sea un laberinto de tipo lab.
-    Post-condition: BFS(lab:Labyrinth) = al path més curt de S a E
+    Pre-condition: Labyrinth must be a lab type labyrinth
+    Post-condition: BFS(lab:Labyrinth) = Shortest path from S to E
     '''
     print('Starting BFS')
     end = lab.getEndCell()
