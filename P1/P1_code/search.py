@@ -1,3 +1,4 @@
+# Participants: Cristian Oprea & Xavier Vila
 from labyrinth import Labyrinth
 
 def rec_DFS(current_cell, visited, endcell):
